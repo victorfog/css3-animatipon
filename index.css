@@ -1,0 +1,486 @@
+:root {
+    --animation-half: 50s;
+    --animation-time: calc(var(--animation-half)*2);
+}
+
+.canvas {
+    position: relative;
+    
+    width: 500px;
+    height: 380px;
+    margin: 80px 0 0 0;
+    
+    transition: .3s ease;
+    
+    perspective: 800px;
+}
+
+.box_front {
+    position: relative;
+    
+    overflow: hidden;
+    
+    width: 500px;
+    height: 380px;
+    
+    background: skyblue;
+    box-shadow: 0 -400px 300px -300px steelblue inset;
+}
+
+/*TODO
+Цвета неба задаются следующими свойствами:
+    День:
+        background: skyblue;
+        box-shadow: 0 -400px 300px -300px steelblue inset;
+    Вечер:
+        background: darkslateblue;
+        box-shadow: 0 -400px 300px -300px orangered inset;
+    Ночь:
+        background: darkslateblue;
+        box-shadow: 0 -400px 300px -300px transparent inset;
+        
+Нужно реализовать плавный переход между ними и зациклить его.
+*/
+
+.ship::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100px;
+    height: 20px;
+    
+    content: '';
+    
+    border-radius: 0 0 0 20px;
+    background: #e25c45;
+}
+
+.ship::before {
+    position: absolute;
+    top: 0;
+    left: 10px;
+
+    width: 65px;
+    height: 16px;
+    
+    content: '';
+    
+    border-radius: 20px 0 0 0;
+    background: #fff;
+}
+
+.ship {
+    position: absolute;
+    right: 0;
+    bottom: 30px;
+    
+    width: 100px;
+    height: 36px;
+}
+
+.ship_smokestack {
+    position: absolute;
+    bottom: 36px;
+    left: 45px;
+    
+    width: 10px;
+    height: 17px;
+    
+    background: #a18e6e;
+}
+
+.ship_window {
+    position: absolute;
+    top: 6px;
+    left: 40px;
+    
+    width: 7px;
+    height: 7px;
+    
+    border-radius: 50%;
+    background: #a18e6e;
+    box-shadow: 13px 0 0 0 #a18e6e, -13px 0 0 0 #a18e6e;
+}
+
+.smoke div {
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+    background: #fff;
+}
+
+.smoke-1 {
+    top: -25px;
+    right: 44px;
+}
+
+.smoke-2 {
+    top: -25px;
+    right: 42px;
+}
+
+.smoke-3 {
+    top: -25px;
+    right: 49px;
+}
+
+.sun { /*меняю координаты  top: 30px; */
+    position: absolute;
+    /*
+    top: 330px;
+    right: 50%;
+    */
+    top: 350px;
+    left: 200px;
+
+    width: 80px;
+    height: 80px;
+    
+    border-radius: 50%;
+    background: #ffcf11;
+    box-shadow: 0 0 100px #ffdf05;
+}
+
+.sun-wrapper {
+    position: absolute;
+    
+    width: 100%;
+    height: 100%;
+    
+    transform-origin: bottom center;
+}
+
+.sun div {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    
+    width: 2px;
+    height: 100px;
+    margin-left: -1px;
+    
+    border: solid #ffcf11;
+    border-width: 10px 0 10px 0;
+}
+
+.sun div:nth-child(2) {
+    transform: rotate(18deg);
+}
+
+.sun div:nth-child(3) {
+    transform: rotate(36deg);
+}
+
+.sun div:nth-child(4) {
+    transform: rotate(54deg);
+}
+
+.sun div:nth-child(5) {
+    transform: rotate(72deg);
+}
+
+.sun div:nth-child(6) {
+    transform: rotate(90deg);
+}
+
+.sun div:nth-child(7) {
+    transform: rotate(-18deg);
+}
+
+.sun div:nth-child(8) {
+    transform: rotate(-36deg);
+}
+
+.sun div:nth-child(9) {
+    transform: rotate(-54deg);
+}
+
+.sun div:nth-child(10) {
+    transform: rotate(-72deg);
+}
+
+.cloud {
+    position: absolute;
+    left: -180px;
+    
+    width: 200px;
+    height: 60px;
+    
+    opacity: .8;
+    border-radius: 200px;
+    background: #fff;
+}
+
+.cloud:before,
+.cloud:after {
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    
+    width: 100px;
+    height: 80px;
+    
+    content: '';
+    
+    border-radius: 100px;
+    background: #fff;
+}
+
+.cloud:after {
+    top: -55px;
+    right: 15px;
+    left: auto;
+    
+    width: 120px;
+    height: 120px;
+}
+
+.cloud-1 {
+    top: 10px;
+}
+
+.cloud-2 {
+    top: 50px;
+}
+
+.cloud-3 {
+    top: 100px;
+}
+
+.cloud-4 {
+    top: 170px;
+}
+
+.sea {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    
+    height: 40px;
+    
+    opacity: .8;
+    background: #2a94d6;
+}
+
+.sea::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    
+    height: 10px;
+    
+    content: '';
+    
+    background: #1d7fbb;
+}
+/* анимация дыма */
+.smoke div{ /* вешаем анимацию на весь элемент div который содержит клубы дыма */
+    animation-name: move_smoke;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
+
+.smoke-1{ /* пишем время за которое должно проилйти анимация*/
+    animation-duration: 3s;
+
+}
+
+.smoke-2{/* вешаем анимацию на весь элемент div который содержит клубы дыма делаем задержку только на одмом бымке */
+    animation-duration: 3s;
+    animation-delay: 1s;
+}
+
+.smoke-3{/* вешаем анимацию на весь элемент div который содержит клубы дыма */
+    animation-duration: 3s;
+    animation-delay: 2s;
+}
+
+@keyframes move_smoke {
+    from {
+        transform: translateY(0%);
+        opacity: 1
+    }
+    to {
+        transform: translateY(-200%) scale(1.2);
+        opacity: 0
+    }
+}
+/* анимация дыма */
+
+/* анимация кораблика */
+
+.ship {
+    animation-name: move_to_left;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+    animation-duration: var(--animation-half);
+    animation-delay: 3s;
+
+
+}
+@keyframes move_to_left {
+    from {
+        transform: translateX(110px);
+    }
+    to {
+        transform: translateX(-500px);
+    }
+}
+/* анимация кораблика закончилась*/
+/*солнышко лети */
+.sun {
+    animation-name: sun-rotate;
+    animation-duration: var(--animation-time);
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes sun-rotate {
+    0% {
+        transform: rotate(0turn) translateY(-0px) translateX(-300px) rotate(-10turn);
+    }
+
+    100% {
+        transform: rotate(1turn) translateY(-0px) translateX(-350px) rotate(0turn);
+    }
+
+    /*
+    from{transform: rotate(0deg) translateX(-270px) translateY(5px);;
+    }
+    to {transform: rotate(230deg) translateX(-300px) translateY(200px);
+
+    }
+
+     */
+}
+/*солнышко село*/
+/*день или ночь */
+.box_front{
+    animation-name: day_or_night;
+    animation-duration: var(--animation-time);
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+}
+
+@keyframes day_or_night {
+    0%, 40%, 100% {background: skyblue;
+        box-shadow: 0 -400px 300px -300px steelblue inset;}
+    45%, 95%  {background: drkslateblue;
+        box-shadow: 0 -400px 300px -300px orangered inset;}
+    50%, 90% {background: darkslateblue;
+        box-shadow: 0 -400px 300px -300px transparent inset;}
+}
+
+/*день или ночь */
+/* облака начало */
+.cloud-4{
+    animation-name: cloud-4_move;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: calc(0.18*var(--animation-time));
+    animation-delay: 2s;
+    transition: transform, translateX;
+    animation-fill-mode: backwards;
+
+
+}
+
+@keyframes cloud-4_move {
+from {
+        transform: translateX(-110px) scale(-0.7, 0.7) ;
+    }
+to {
+        transform: translateX(650px) scale(-0.7, 0.7);
+    }
+
+
+}
+.cloud-3{
+    animation-name: cloud-3_move;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: calc(0.25*var(--animation-time));
+    animation-delay: 8s;
+}
+
+@keyframes cloud-3_move {
+    from {
+        transform: translateX(-110px) scale(.6);
+    }
+    to {
+        transform: translateX(650px) scale(.6);
+    }
+
+
+}
+.cloud-2{
+    animation-name: cloud-2_move;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: calc(0.3*var(--animation-time));
+    animation-delay: 6s;
+
+}
+
+@keyframes cloud-2_move {
+    from {
+        transform: translateX(-110px) scale(-0.5, 0.5);
+    }
+    to {
+        transform: translateX(650px) scale(-0.5, 0.5);
+    }
+
+
+}
+
+.cloud-1{
+    animation-name: cloud-1_move;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: calc(0.4*var(--animation-time));
+    animation-delay: 2s;
+    animation-fill-mode: backwards;
+
+}
+
+@keyframes cloud-1_move {
+    from {
+        transform: translateX(-110px) scale(.3);
+    }
+    to {
+        transform: translateX(600px) scale(.3);
+    }
+
+
+}
+
+
+/* облака конец */
+/*.sun:only-child {*/
+/*    animation-name: move_light;*/
+/*    animation-duration: 60s;*/
+/*    animation-iteration-count: infinite;*/
+/*    animation-timing-function: linear;*/
+/*}*/
+/*@keyframes sun-rotate {*/
+/*    from{transform: rotate(0deg);*/
+/*    }*/
+/*    to {transform: rotate(360deg));*/
+
+/*    }*/
+/*}*/
+
+
+
+/*начало сценирия */
+.cloud {
+    transform: translateX(-110px);
+}
+
+/*все готовы ?*/
